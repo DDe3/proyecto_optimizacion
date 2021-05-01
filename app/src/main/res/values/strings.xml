@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Aplicativo GAD</string>
+    <string name="open">Abrir drawer de navegacion</string>
+    <string name="close">Cerrar drawer de navegacion</string>
+    <string name="title_activity_maps">Map</string>
+
+    /* Informacion*/
+    <string name="titulo">PRESIDENTE PARROQUIAL</string>
+    <string name="descripcion">presidente</string>
+    <string name="saludo">"Un saludo fraterno a todo mi pueblo"</string>
+    <string name="barra">adorno</string>
+    <string name="titulo_1">Transporte</string>
+    <string name="titulo_2">Población</string>
+    <string name="titulo_3">Ubicación</string>
+    <string name="icono">icono</string>
+    <string name="bus">Dan servicio a esta parroquia las Coop. Termas Turis (se lo toma en el Terminal Intervalles de Quito- Playon de la Marín).</string>
+    <string name="poblacion">3.100 habitantes aprox. en la actualidad.</string>
+    <string name="ubicacion">Se encuentra ubicada en el Cantón Quito, Prov. de Pichincha, a una hora desde la ciudad de Quito.</string>
+    <string name="nombre"> Sr. Euclides Marco Guamantica</string>
+
+
+    /* RecyclerView */
+    <string name="primer_recycler">Lugares Turísticos</string>
+    <string name="segundo_recycler">Eventos</string>
+
+    <string name="lore_ipsum">Lore ipsum</string>
+
+    /* ImageButton */
+    <string name="titulo_img_button">Gastronomía</string>
+</resources>

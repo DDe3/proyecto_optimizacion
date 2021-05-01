@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".HomeActivity"
+    android:fitsSystemWindows="true"
+
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/drawer_layout">
+
+    
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:id="@+id/nav_view"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_menu"
+        app:itemTextColor="@color/cardview_light_background"
+        app:itemIconTint="@color/cardview_light_background"
+        app:itemIconSize="40dp"
+        android:layout_gravity="start"
+        android:background="@color/azul" />
+
+
+
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".menu.InicioActivity">
+
+
+
+            <me.henrytao.smoothappbarlayout.SmoothAppBarLayout
+                        android:id="@+id/app_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:theme="@style/AppTheme.AppBarOverlay">
+
+
+
+                        <com.google.android.material.appbar.CollapsingToolbarLayout
+                            android:id="@+id/toolbar_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:fitsSystemWindows="true"
+                            app:contentScrim="?attr/colorPrimaryDark"
+                            app:layout_scrollFlags="scroll|enterAlways"
+                            android:elevation="15dp">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/fotoinicio"
+                                app:layout_scrollFlags="scroll|enterAlways"
+                                app:contentInsetStart="0dp"/>
+
+
+                            <androidx.appcompat.widget.Toolbar
+
+                                android:id="@+id/toolbar2"
+                                android:layout_width="match_parent"
+                                android:layout_height="?attr/actionBarSize"
+                                app:contentInsetStart="0dp"
+                                app:contentInsetStartWithNavigation="0dp"
+                                app:layout_scrollFlags="scroll|enterAlways"
+                                app:layout_collapseMode="pin"
+                                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+                        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            </me.henrytao.smoothappbarlayout.SmoothAppBarLayout>
+
+            <include layout="@layout/content_scrolling" />
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
+                app:layout_anchor="@id/app_bar"
+                app:layout_anchorGravity="bottom|end"
+                app:srcCompat="@android:drawable/ic_media_play" />
+
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
