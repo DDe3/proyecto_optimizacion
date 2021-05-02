@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -143,7 +144,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         lista = new ArrayList<>();
 
-        // *********************** LLenar la lista por medio de una consulta a DB  ********************* //
+        // *********************** LLenar la lista con los elementos que sean necesarios  ********************* //
         lista.add(new ListElement("icono","Titulo 1", "Descripcion de titulo 1"));
         lista.add(new ListElement("icono","Titulo 2", "Descripcion de titulo 2"));
         lista.add(new ListElement("icono","Titulo 3", "Descripcion de titulo 3"));
@@ -160,12 +161,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         ListAdapter listAdapter = new ListAdapter(lista,this);
         RecyclerView recyclerViewTuristico = findViewById(R.id.turisticoReciclerView);
         recyclerViewTuristico.setHasFixedSize(true);
+        ViewCompat.setNestedScrollingEnabled(recyclerViewTuristico, false);
         LinearLayoutManager horizontalLayout = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewTuristico.setLayoutManager(horizontalLayout);
         recyclerViewTuristico.setAdapter(listAdapter);
 
         RecyclerView recyclerViewEvento = findViewById(R.id.eventoReciclerView);
         recyclerViewEvento.setHasFixedSize(true);
+        ViewCompat.setNestedScrollingEnabled(recyclerViewEvento, false);
         LinearLayoutManager horizontalLayout2 = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewEvento.setLayoutManager(horizontalLayout2);
         recyclerViewEvento.setAdapter(listAdapter);
