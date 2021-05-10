@@ -1,18 +1,24 @@
 package com.example.aplicativogad;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-public class ElementoActivity extends AppCompatActivity {
+import com.example.aplicativogad.entidades.Turistico;
 
-    androidx.appcompat.widget.Toolbar toolbar;
+public class EventoActivity extends AppCompatActivity {
+
+    Toolbar toolbar;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_elemento);
+        setContentView(R.layout.activity_evento);
         toolbarConfig();
+        intent = getIntent();
     }
 
     private void toolbarConfig() {

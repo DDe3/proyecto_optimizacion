@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,17 +17,24 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import com.example.aplicativogad.database.AppDatabase;
+import com.example.aplicativogad.entidades.Evento;
+import com.example.aplicativogad.interfaces.EntityDao;
 import com.example.aplicativogad.menu.ContactosActivity;
 import com.example.aplicativogad.menu.InformacionActivity;
-import com.example.aplicativogad.recycler.ListAdapter;
-import com.example.aplicativogad.recycler.ListElement;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.example.aplicativogad.recycler_adapter.EventoAdapter;
+import com.example.aplicativogad.recycler_adapter.TuristicoAdapter;
+import com.example.aplicativogad.entidades.Turistico;
+import com.example.aplicativogad.repository.EventoRepository;
+import com.example.aplicativogad.repository.EventoRepositoryImpl;
+import com.example.aplicativogad.repository.TuristicoRepository;
+import com.example.aplicativogad.repository.TuristicoRepositoryImpl;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,7 +42,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     androidx.appcompat.widget.Toolbar toolbar;
-    List<ListElement> lista;
+    List<Turistico> listaTuristico;
+    List<Evento> listaEvento;
+
+    // DB variables
+    AppDatabase db;
+    EntityDao dao;
+    EventoRepository er;
+    TuristicoRepository tr;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +63,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        //toolbar = findViewById(R.id.toolbar);
-
-
-        /*----------- Tool Bar --------------- */
-//        toolbar.setTitle("");
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().hide();
-
-        /* diseño del interior de la pagina*/
         Toolbar toolbar2 = findViewById(R.id.toolbar2);
+
+
+
+        /*-------------- Toolbar -------------*/
+
         setSupportActionBar(toolbar2);
         getSupportActionBar().setTitle(getTitle());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -85,7 +96,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        recyclerInicio();
+
+        try {
+            recyclerInicio();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -110,7 +126,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.mapa:
-                Toast.makeText(this,"MAPA AUN NO IMPLEMENTADO", Toast.LENGTH_SHORT).show();
+                intent = new Intent(HomeActivity.this, MapsActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.info:
@@ -140,38 +157,37 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private void recyclerInicio() {
+    private void recyclerInicio() throws ExecutionException, InterruptedException {
 
-        lista = new ArrayList<>();
+        databaseInit();
 
-        // *********************** LLenar la lista con los elementos que sean necesarios  ********************* //
-        lista.add(new ListElement("icono","Titulo 1", "Descripcion de titulo 1"));
-        lista.add(new ListElement("icono","Titulo 2", "Descripcion de titulo 2"));
-        lista.add(new ListElement("icono","Titulo 3", "Descripcion de titulo 3"));
-        lista.add(new ListElement("icono","Titulo 4", "Descripcion de titulo 4"));
-        lista.add(new ListElement("icono","Titulo 5", "Descripcion de titulo 5"));
-        lista.add(new ListElement("icono","Titulo 6", "Descripcion de titulo 6"));
-        lista.add(new ListElement("icono","Titulo 7", "Descripcion de titulo 7"));
-        lista.add(new ListElement("icono","Titulo 8", "Descripcion de titulo 8"));
-        lista.add(new ListElement("icono","Titulo 9", "Descripcion de titulo 9"));
-        lista.add(new ListElement("icono","Titulo 10", "Descripcion de titulo 10"));
+        listaTuristico = tr.getAll();
+        listaEvento = er.getAll();
 
-        //***********************************************************************************************//
-
-        ListAdapter listAdapter = new ListAdapter(lista,this);
+        TuristicoAdapter turisticoAdapter = new TuristicoAdapter(listaTuristico,this);
         RecyclerView recyclerViewTuristico = findViewById(R.id.turisticoReciclerView);
         recyclerViewTuristico.setHasFixedSize(true);
         ViewCompat.setNestedScrollingEnabled(recyclerViewTuristico, false);
         LinearLayoutManager horizontalLayout = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewTuristico.setLayoutManager(horizontalLayout);
-        recyclerViewTuristico.setAdapter(listAdapter);
+        recyclerViewTuristico.setAdapter(turisticoAdapter);
 
+        EventoAdapter eventoAdapter = new EventoAdapter(listaEvento,this);
         RecyclerView recyclerViewEvento = findViewById(R.id.eventoReciclerView);
         recyclerViewEvento.setHasFixedSize(true);
         ViewCompat.setNestedScrollingEnabled(recyclerViewEvento, false);
         LinearLayoutManager horizontalLayout2 = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewEvento.setLayoutManager(horizontalLayout2);
-        recyclerViewEvento.setAdapter(listAdapter);
+        recyclerViewEvento.setAdapter(eventoAdapter);
 
     }
+
+    public void databaseInit() throws InterruptedException {
+        db = AppDatabase.getInstance(this);
+        dao = db.entityDao();
+        er = new EventoRepositoryImpl(dao);
+        tr = new TuristicoRepositoryImpl(dao);
+    }
+
+
 }

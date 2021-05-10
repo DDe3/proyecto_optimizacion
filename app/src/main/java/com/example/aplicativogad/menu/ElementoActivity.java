@@ -11,6 +11,6 @@ public class ElementoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_elemento);
+        setContentView(R.layout.activity_turistico);
     }
 }
